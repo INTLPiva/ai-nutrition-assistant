@@ -8,6 +8,7 @@ const start = async (): Promise<void> => {
 
     await server.listen({
       port: env.PORT,
+      host: "0.0.0.0",
     });
 
     console.log(`🚀 Server running on port ${env.PORT}`);
