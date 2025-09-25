@@ -4,26 +4,24 @@ import { z } from "zod";
 export const UserDataSchema = z.object({
   completed: z.boolean(),
   collected_at: z.string().optional(),
-  user: z
-    .object({
-      age: z.number().min(1).max(120).optional(),
-      sex: z.enum(["masculino", "feminino", "outro"]).optional(),
-      height_cm: z.number().min(50).max(300).optional(),
-      weight_kg: z.number().min(20).max(500).optional(),
-      activity_level: z
-        .enum(["sedentário", "leve", "moderado", "intenso"])
-        .optional(),
-      goal: z.string().optional(),
-      meals_per_day: z.number().min(1).max(10).optional(),
-      dietary_restrictions: z.array(z.string()).optional(),
-      allergies: z.array(z.string()).optional(),
-      preferences: z.array(z.string()).optional(),
-      medical_conditions: z.array(z.string()).optional(),
-      supplements: z.array(z.string()).optional(),
-      timezone: z.string().optional(),
-      notes: z.string().optional(),
-    })
-    .optional(),
+  user: z.object({
+    age: z.number().min(1).max(120).optional(),
+    sex: z.enum(["masculino", "feminino", "outro"]).optional(),
+    height_cm: z.number().min(50).max(300).optional(),
+    weight_kg: z.number().min(20).max(500).optional(),
+    activity_level: z
+      .enum(["sedentário", "leve", "moderado", "intenso"])
+      .optional(),
+    goal: z.string().optional(),
+    meals_per_day: z.number().min(1).max(10).optional(),
+    dietary_restrictions: z.array(z.string()).optional(),
+    allergies: z.array(z.string()).optional(),
+    preferences: z.array(z.string()).optional(),
+    medical_conditions: z.array(z.string()).optional(),
+    supplements: z.array(z.string()).optional(),
+    timezone: z.string().optional(),
+    notes: z.string().optional(),
+  }),
 });
 
 // Request/Response Types
