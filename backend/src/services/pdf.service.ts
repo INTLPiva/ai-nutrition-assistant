@@ -137,86 +137,190 @@ export class PdfService {
   private addFormattedText(doc: PDFKit.PDFDocument, text: string): void {
     const lines = text.split("\n");
 
-    for (const line of lines) {
-      const trimmedLine = line.trim();
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmedLine = (line ?? "").trim();
 
       if (!trimmedLine || trimmedLine === "##EXPORT_PDF") continue;
 
-      // Handle headers (lines starting with #)
-      if (trimmedLine.startsWith("###")) {
-        doc.moveDown(0.5);
-        doc
-          .fontSize(12)
-          .font("Helvetica-Bold")
-          .fillColor("#2E8B57")
-          .text(trimmedLine.replace(/^#+\s*/, ""), { indent: 40 });
-        doc.moveDown(0.3);
-      } else if (trimmedLine.startsWith("##")) {
+      // Check if we need a new page before adding content
+      if (doc.y > 720) {
+        doc.addPage();
+      }
+
+      // Handle headers
+      if (
+        trimmedLine.startsWith("**") &&
+        trimmedLine.endsWith("**") &&
+        trimmedLine.length > 4
+      ) {
+        const headerText = trimmedLine.replace(/^\*\*|\*\*$/g, "");
         doc.moveDown(0.8);
         doc
           .fontSize(14)
           .font("Helvetica-Bold")
           .fillColor("#2E8B57")
-          .text(trimmedLine.replace(/^#+\s*/, ""), { indent: 20 });
+          .text(headerText, { indent: 0 });
         doc.moveDown(0.5);
-      } else if (trimmedLine.startsWith("#")) {
-        doc.moveDown(1);
+      }
+      // Handle table headers or section titles
+      else if (
+        trimmedLine.includes(" | ") &&
+        (trimmedLine.includes("Horário") || trimmedLine.includes("Refeição"))
+      ) {
+        // Skip table headers and separators
+        continue;
+      } else if (trimmedLine.match(/^-+\s*\|\s*-+/)) {
+        // Skip table separators
+        continue;
+      }
+      // Handle table rows
+      else if (trimmedLine.includes(" | ")) {
+        this.addTableRow(doc, trimmedLine);
+      }
+      // Handle day headers (Segunda:, Terça:, etc.)
+      else if (
+        trimmedLine.match(
+          /^\*\*(Segunda|Terça|Quarta|Quinta|Sexta|Sábado|Domingo):\*\*$/
+        )
+      ) {
+        const dayText = trimmedLine.replace(/^\*\*|\*\*$/g, "");
+        doc.moveDown(0.5);
         doc
-          .fontSize(16)
+          .fontSize(12)
           .font("Helvetica-Bold")
           .fillColor("#333333")
-          .text(trimmedLine.replace(/^#+\s*/, ""));
-        doc.moveDown(0.7);
-      }
-      // Handle bullet points
-      else if (trimmedLine.startsWith("- ") || trimmedLine.startsWith("• ")) {
-        doc
-          .fontSize(11)
-          .font("Helvetica")
-          .fillColor("#555555")
-          .text(trimmedLine, { indent: 40 });
-      }
-      // Handle bold text (**text**)
-      else if (trimmedLine.includes("**")) {
-        const parts = trimmedLine.split("**");
-        let x = doc.x;
-        const y = doc.y;
-
-        for (let i = 0; i < parts.length; i++) {
-          const part = parts[i];
-          if (i % 2 === 0) {
-            // Normal text
-            doc.fontSize(11).font("Helvetica").fillColor("#555555");
-          } else {
-            // Bold text
-            doc.fontSize(11).font("Helvetica-Bold").fillColor("#333333");
-          }
-
-          if (part) {
-            doc.text(part, x, y, { continued: i < parts.length - 1 });
-            x += doc.widthOfString(part);
-          }
-        }
-        doc.moveDown();
-      }
-      // Regular text
-      else if (trimmedLine.length > 0) {
-        doc
-          .fontSize(11)
-          .font("Helvetica")
-          .fillColor("#555555")
-          .text(trimmedLine, { indent: 20, align: "justify" });
-      }
-      // Empty line
-      else {
+          .text(dayText, { indent: 0 });
         doc.moveDown(0.3);
       }
-
-      // Check if we need a new page
-      if (doc.y > 700) {
-        doc.addPage();
+      // Handle bullet points starting with *
+      else if (trimmedLine.startsWith("* ")) {
+        doc
+          .fontSize(11)
+          .font("Helvetica")
+          .fillColor("#555555")
+          .text(`• ${trimmedLine.substring(2)}`, {
+            indent: 20,
+            width: 500,
+            align: "left",
+          });
+        doc.moveDown(0.2);
+      }
+      // Handle bullet points starting with -
+      else if (trimmedLine.startsWith("- ")) {
+        doc
+          .fontSize(11)
+          .font("Helvetica")
+          .fillColor("#555555")
+          .text(`• ${trimmedLine.substring(2)}`, {
+            indent: 20,
+            width: 500,
+            align: "left",
+          });
+        doc.moveDown(0.2);
+      }
+      // Handle regular text with potential bold formatting
+      else if (trimmedLine.length > 0) {
+        if (trimmedLine.includes("**")) {
+          this.addTextWithBold(doc, trimmedLine);
+        } else {
+          doc
+            .fontSize(11)
+            .font("Helvetica")
+            .fillColor("#555555")
+            .text(trimmedLine, {
+              indent: 0,
+              width: 500,
+              align: "left",
+            });
+        }
+        doc.moveDown(0.3);
       }
     }
+  }
+
+  private addTableRow(doc: PDFKit.PDFDocument, row: string): void {
+    const columns = row.split(" | ").map((col) => col.trim());
+
+    if (columns.length >= 4) {
+      const [horario, refeicao, sugestoes, observacoes] = columns;
+
+      // Check if we need a new page
+      if (doc.y > 680) {
+        doc.addPage();
+      }
+
+      doc.moveDown(0.5);
+
+      // Horário
+      doc
+        .fontSize(11)
+        .font("Helvetica-Bold")
+        .fillColor("#333333")
+        .text(`${horario}`, { indent: 0 });
+
+      // Refeição
+      doc
+        .fontSize(11)
+        .font("Helvetica-Bold")
+        .fillColor("#2E8B57")
+        .text(`${refeicao}`, { indent: 20 });
+
+      // Sugestões
+      if (sugestoes && sugestoes.length > 10) {
+        doc
+          .fontSize(10)
+          .font("Helvetica")
+          .fillColor("#555555")
+          .text(`${sugestoes}`, {
+            indent: 40,
+            width: 450,
+            align: "left",
+          });
+      }
+
+      // Observações
+      if (observacoes && observacoes.length > 5) {
+        doc
+          .fontSize(10)
+          .font("Helvetica-Oblique")
+          .fillColor("#777777")
+          .text(`${observacoes}`, {
+            indent: 40,
+            width: 450,
+            align: "left",
+          });
+      }
+
+      doc.moveDown(0.8);
+    }
+  }
+
+  private addTextWithBold(doc: PDFKit.PDFDocument, text: string): void {
+    const parts = text.split(/(\*\*[^*]+\*\*)/);
+    let currentY = doc.y;
+
+    doc.fontSize(11).font("Helvetica").fillColor("#555555");
+
+    let textLine = "";
+
+    for (const part of parts) {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        // Bold text
+        const boldText = part.replace(/^\*\*|\*\*$/g, "");
+        textLine += boldText;
+      } else {
+        // Regular text
+        textLine += part;
+      }
+    }
+
+    // Render the complete line
+    doc.text(textLine, {
+      indent: 0,
+      width: 500,
+      align: "left",
+    });
   }
 }
 
