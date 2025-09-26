@@ -11,7 +11,7 @@ class NutritionAssistantService {
 
   constructor() {
     this.llm = new ChatGoogleGenerativeAI({
-      modelName: "gemini-1.5-flash",
+      modelName: "gemini-2.0-flash",
       apiKey: env.GEMINI_API_KEY,
       temperature: 0.7,
       maxOutputTokens: 2048,
