@@ -6,7 +6,7 @@ import {
 } from "../types";
 import { env } from "../config/env";
 
-class SessionService {
+export class SessionService {
   private sessions: Map<string, UserSession> = new Map();
 
   createSession(sessionId: string): UserSession {
