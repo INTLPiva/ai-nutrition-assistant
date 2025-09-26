@@ -33,7 +33,7 @@ Backend em Node.js com TypeScript e Fastify para um assistente nutricional intel
 1. **Clone o repositório**
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/INTLPiva/ai-nutrition-assistant.git
 cd nutrition-assistant-backend
 ```
 
@@ -46,7 +46,7 @@ npm install
 3. **Configure as variáveis de ambiente**
 
 ```bash
-cp .env.example .env
+cp .env
 ```
 
 Edite o arquivo `.env` com suas configurações:
