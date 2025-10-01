@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Alert, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  Alert,
+  ActivityIndicator,
+  Image,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import MessageBubble from '../components/MessageBubble';
@@ -188,7 +196,7 @@ const ChatScreen: React.FC = () => {
     return (
       <View className="flex-1 bg-white">
         <View className="bg-green-500 px-6 py-6">
-          <Text className="text-center text-xl font-bold text-white">Nutricionista IA</Text>
+          <Text className="text-center text-xl font-bold text-white">NutriFácil</Text>
           <Text className="mt-1 text-center text-green-100">
             Seu assistente pessoal de nutrição
           </Text>
@@ -196,7 +204,11 @@ const ChatScreen: React.FC = () => {
 
         <View className="flex-1 items-center justify-center px-6">
           <View className="mb-6 h-24 w-24 items-center justify-center rounded-full bg-green-50">
-            <Ionicons name="nutrition" size={48} color={COLORS.PRIMARY} />
+            <Image
+              source={require('../assets/icon.png')}
+              alt="Nutricionista IA"
+              className="h-20 w-20"
+            />
           </View>
 
           <Text className="mb-3 text-center text-2xl font-bold text-gray-800">Bem-vindo!</Text>
@@ -229,7 +241,7 @@ const ChatScreen: React.FC = () => {
           <Ionicons name="arrow-back" size={24} color={COLORS.WHITE} />
         </TouchableOpacity>
         <View className="flex-1">
-          <Text className="text-lg font-bold text-white">Nutricionista IA</Text>
+          <Text className="text-lg font-bold text-white">NutriFácil</Text>
           <Text className="text-sm text-green-100">
             {chatState.isCompleted ? 'Consulta finalizada' : 'Online'}
           </Text>

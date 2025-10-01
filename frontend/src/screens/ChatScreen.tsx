@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, ShoppingCart, CircleNotch } from "phosphor-react";
+import { ArrowLeft, CircleNotch } from "phosphor-react";
 import MessageBubble from "../components/MessageBubble";
 import LoadingIndicator from "../components/LoadingIndicator";
 import ChatInput from "../components/ChatInput";
@@ -183,7 +183,7 @@ const ChatScreen: React.FC = () => {
       <div className="h-screen flex flex-col bg-white">
         <div className="bg-green-500 px-6 py-4">
           <h1 className="text-white text-xl font-bold text-center">
-            Nutricionista IA
+            NutriFácil
           </h1>
           <p className="text-green-100 text-center mt-1">
             Seu assistente pessoal de nutrição
@@ -192,7 +192,7 @@ const ChatScreen: React.FC = () => {
 
         <div className="flex-1 flex flex-col justify-center items-center px-6">
           <div className="bg-green-50 w-24 h-24 rounded-full flex items-center justify-center mb-6">
-            <ShoppingCart size={48} weight="bold" className="text-green-500" />
+            <img src="icon.png" alt="Nutricionista IA" className="w-24 h-24" />
           </div>
 
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-3">
@@ -233,7 +233,7 @@ const ChatScreen: React.FC = () => {
           <ArrowLeft size={24} weight="bold" />
         </button>
         <div className="flex-1">
-          <h1 className="text-white text-lg font-bold">Nutricionista IA</h1>
+          <h1 className="text-white text-lg font-bold">NutriFácil</h1>
           <p className="text-green-100 text-sm">
             {chatState.isCompleted ? "Consulta finalizada" : "Online"}
           </p>

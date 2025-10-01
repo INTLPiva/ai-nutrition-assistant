@@ -50,7 +50,7 @@ const NutritionPlanScreen: React.FC<NutritionPlanScreenProps> = ({
           <ArrowLeft size={24} weight="bold" />
         </button>
         <div className="flex-1">
-          <h1 className="text-white text-lg font-bold">Nutricionista IA</h1>
+          <h1 className="text-white text-lg font-bold">NutriFácil</h1>
           <p className="text-green-100 text-sm">
             Seu plano nutricional personalizado
           </p>

@@ -67,7 +67,7 @@ const NutritionPlanScreen: React.FC<NutritionPlanScreenProps> = ({
           <Ionicons name="arrow-back" size={24} color={COLORS.WHITE} />
         </TouchableOpacity>
         <View className="flex-1">
-          <Text className="text-lg font-bold text-white">Nutricionista IA</Text>
+          <Text className="text-lg font-bold text-white">NutriFácil</Text>
           <Text className="text-sm text-green-100">Seu plano nutricional personalizado</Text>
         </View>
       </View>
