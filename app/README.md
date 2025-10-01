@@ -24,7 +24,7 @@ Um aplicativo React Native desenvolvido com Expo que implementa um chat intelige
 
 ```bash
 git clone https://github.com/INTLPiva/ai-nutrition-assistant.git
-cd nutrition-chat-app
+cd app
 ```
 
 2. **Instale as dependências:**
@@ -87,9 +87,10 @@ src/
 
 ### 3. Tela do Plano Nutricional
 
-- **Limpeza automática** do histórico quando completado
-- **Renderização Markdown** em tela cheia
-- **Botão Baixar/Compartilhar PDF**: Download e compartilhamento
+- Limpeza automática do histórico
+- Renderização Markdown em tela cheia
+- Header com botão de voltar
+- Botão "Baixar/Compartilhar PDF"
 
 ### 4. Gerenciamento de Estado
 

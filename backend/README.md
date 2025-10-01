@@ -34,7 +34,7 @@ Backend em Node.js com TypeScript e Fastify para um assistente nutricional intel
 
 ```bash
 git clone https://github.com/INTLPiva/ai-nutrition-assistant.git
-cd nutrition-assistant-backend
+cd backend
 ```
 
 2. **Instale as dependências**
@@ -71,11 +71,6 @@ npm start
 
 ## 📡 API Endpoints
 
-### Health Check
-
-- `GET /health` - Status básico do servidor
-- `GET /health/detailed` - Status detalhado com métricas
-
 ### Assistente Nutricional
 
 - `POST /message` - Processar mensagem do usuário
@@ -94,7 +89,6 @@ npm start
 ### Exportação PDF
 
 - `POST /export-pdf` - Gerar PDF do plano nutricional
-- `POST /preview-pdf` - Visualizar PDF no browser
 
 ## 🔄 Fluxo do Assistente
 
