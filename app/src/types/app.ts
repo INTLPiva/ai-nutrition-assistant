@@ -1,6 +1,8 @@
+import { MessageResponse } from '~/services/apiService';
+
 export interface NutritionPlanData {
   text: string;
-  apiResponse: any;
+  apiResponse: MessageResponse;
 }
 
 export interface AppState {

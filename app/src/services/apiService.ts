@@ -12,7 +12,7 @@ const apiService = axios.create({
 export interface MessageResponse {
   json: {
     completed: boolean;
-    user: Record<string, any>;
+    user: User;
   };
   text: string;
   done: boolean;
@@ -21,6 +21,21 @@ export interface MessageResponse {
 export interface SendMessageRequest {
   sessionId: string;
   message: string;
+}
+
+interface User {
+  age: number;
+  sex: string;
+  height_cm: number;
+  weight_kg: number;
+  activity_level: string;
+  goal: string;
+  meals_per_day: number;
+  dietary_restrictions: string[];
+  allergies: string[];
+  preferences: string[];
+  medical_conditions: string[];
+  timezone: string;
 }
 
 export const sendMessage = async (data: SendMessageRequest): Promise<MessageResponse> => {
@@ -33,7 +48,7 @@ export const sendMessage = async (data: SendMessageRequest): Promise<MessageResp
   }
 };
 
-export const exportPDF = async (data: any): Promise<Blob> => {
+export const exportPDF = async (data: MessageResponse): Promise<Blob> => {
   try {
     const response = await apiService.post(API_CONFIG.ENDPOINTS.EXPORT_PDF, data, {
       responseType: 'blob',

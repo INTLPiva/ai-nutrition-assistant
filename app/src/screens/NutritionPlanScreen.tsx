@@ -4,12 +4,12 @@ import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { Ionicons } from '@expo/vector-icons';
 import Markdown from 'react-native-markdown-display';
-import { exportPDF } from '../services/apiService';
+import { exportPDF, MessageResponse } from '../services/apiService';
 import { COLORS } from '~/config/constants';
 
 interface NutritionPlanScreenProps {
   planText: string;
-  apiResponse: any;
+  apiResponse: MessageResponse;
   onGoBack: () => void;
 }
 

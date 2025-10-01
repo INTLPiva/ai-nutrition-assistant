@@ -1,3 +1,5 @@
+import { MessageResponse } from '~/services/apiService';
+
 export interface Message {
   id: string;
   text: string;
@@ -11,5 +13,5 @@ export interface ChatState {
   isLoading: boolean;
   isCompleted: boolean;
   sessionId: string | null;
-  lastApiResponse: any;
+  lastApiResponse: MessageResponse | null;
 }

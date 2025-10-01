@@ -7,7 +7,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import ChatInput from '../components/ChatInput';
 import NutritionPlanScreen from './NutritionPlanScreen';
 import { Message, ChatState } from '../types/message';
-import { sendMessage } from '../services/apiService';
+import { MessageResponse, sendMessage } from '../services/apiService';
 import { generateSessionId, saveSessionId, getSessionId } from '../services/storageService';
 import { COLORS } from '~/config/constants';
 
@@ -22,7 +22,9 @@ const ChatScreen: React.FC = () => {
 
   const [isStarted, setIsStarted] = useState(false);
   const [showNutritionPlan, setShowNutritionPlan] = useState(false);
-  const [planData, setPlanData] = useState<{ text: string; apiResponse: any } | null>(null);
+  const [planData, setPlanData] = useState<{ text: string; apiResponse: MessageResponse } | null>(
+    null
+  );
   const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {
